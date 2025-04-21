@@ -1,32 +1,18 @@
-import createCompletionStatus from "./completedStatus";
 class Todo {
-  constructor(
-    title,
-    description,
-    dueDate,
-    priority,
-    notes = ""
-    // checklist = []
-  ) {
-    this.title = title;
-    this.description = description;
-    this.dueDate = dueDate;
-    this.priority = priority;
-    this.notes = notes;
-    // this.checklist = checklist;
-    this.completed = createCompletedStatus();
+  constructor(title, description, dueDate, priority, notes = "") {
+    this._title = title;
+    this._description = description;
+    this._dueDate = dueDate;
+    this._priority = priority;
+    this._notes = notes;
+    this._isCompleted = false;
   }
 
   toggleComplete() {
-    this.completed.toggle();
+    this._isCompleted = !this._isCompleted;
   }
-  get isCompleted() {
-    return this.completed.isCompleted;
-  }
-
-  setCompleted(value) {
-    this.completed.isCompleted = value;
+  get title() {
+    return this._title;
   }
 }
-
 export default Todo;
