@@ -1,4 +1,42 @@
 /* styles.css */
-body {
+/* body {
   background-color: rebeccapurple;
+} */
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1fr auto;
+  height: 100vh;
+  gap: 0; /* optional spacing between columns/rows */
+}
+.sidebar {
+  grid-column: span 3; /* 3 out of 12 columns */
+  padding: 1.5rem;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+}
+
+#toggle-sidebar {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.main-content {
+  grid-column: span 9; /* remaining 9 out of 12 */
+  padding: 2rem;
+}
+
+.footer {
+  grid-column: 1 / -1; /* span all 12 columns */
+  background-color: #eee;
+  padding: 1rem 2rem;
+  text-align: center;
+  color: #666;
 }
