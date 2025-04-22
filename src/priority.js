@@ -1,11 +1,15 @@
 class Priority {
-  constructor(level) {
-    const validPriorities = ["Low", "Medium", "High"];
-    if (validPriorities.includes(level)) {
-      this.level = level;
-    } else {
-      throw new Error("Invalid priority");
-    }
+  static LOW = "low";
+  static MEDIUM = "medium";
+  static HIGH = "high";
+
+  static ALLOWED_VALUES = [Priority.LOW, Priority.MEDIUM, Priority.HIGH];
+  // A function / method to validate the priority value
+  static isValid(value) {
+    // build an array of the defined priorities
+
+    // returns true if the value is one of the defined priorities
+    return Priority.ALLOWED_VALUES.includes(value);
   }
 }
 

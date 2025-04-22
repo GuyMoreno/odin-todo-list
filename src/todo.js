@@ -1,11 +1,21 @@
 import Priority from "./priority";
 
 class Todo {
-  constructor(title, description, dueDate, priority, notes = "") {
+  constructor(
+    title,
+    description,
+    dueDate,
+    priority = Priority.MEDIUM,
+    notes = ""
+  ) {
+    if (!Priority.isValid(priority)) {
+      throw new Error("Invalid priority level");
+    }
     this._title = title;
     this._description = description;
     this._dueDate = dueDate;
-    this.priority = new Priority(priority); // Use Priority class to ensure valid priority    this._notes = notes;
+    this._priority = priority;
+    this._notes = notes;
     this._isCompleted = false;
   }
 
@@ -14,6 +24,21 @@ class Todo {
   }
   get title() {
     return this._title;
+  }
+  get description() {
+    return this._description;
+  }
+  get dueDate() {
+    return this._dueDate;
+  }
+  get priority() {
+    return this._priority;
+  }
+  get notes() {
+    return this._notes;
+  }
+  get isCompleted() {
+    return this._isCompleted;
   }
 }
 export default Todo;
