@@ -2,6 +2,7 @@ import "./styles.css";
 import Todo from "./todo";
 import Project from "./project";
 import ProjectManager from "./projectManager";
+import Dom from "./Dom";
 
 const projectManager = new ProjectManager();
 
@@ -16,19 +17,11 @@ const todo = new Todo(
   "low"
 );
 
-// const todo2 = new Todo(
-//   "UX design",
-//   "Add footer to the page",
-//   "2025-04-23",
-//   "medium"
-// );
-
 // Add todo to project
 defaultProject.addTodo(todo);
-// workProject.addTodo(todo2);
 
-// console.log(schoolProject);
-// console.log(workProject);
 console.log(defaultProject.todos);
 
 // console.log(todo.priority);
+
+// const dialog = createTodoDialog();
