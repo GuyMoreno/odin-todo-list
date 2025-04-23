@@ -33,7 +33,7 @@
   padding: 2rem;
 }
 
-dialog {
+/* dialog {
   border: none;
   border-radius: 6px;
   padding: 16px;
@@ -42,36 +42,13 @@ dialog {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
   font-family: sans-serif;
   background-color: #fefefe;
-}
+} */
 
-form {
+/* form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-label {
-  font-size: 0.9rem;
-  color: #333;
-}
-
-input,
-textarea,
-select {
-  padding: 6px 8px;
-  font-size: 0.9rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #fafafa;
-  transition: border 0.2s;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: #aaa;
-  outline: none;
-}
+} */
 
 .footer {
   grid-column: 1 / -1; /* span all 12 columns */

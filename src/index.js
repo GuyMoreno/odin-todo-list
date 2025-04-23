@@ -2,7 +2,8 @@ import "./styles.css";
 import Todo from "./todo";
 import Project from "./project";
 import ProjectManager from "./projectManager";
-import Dom from "./Dom";
+import todoDom from "./todoDom";
+import ProjectDom from "./projectDom";
 
 const projectManager = new ProjectManager();
 
@@ -20,7 +21,7 @@ const todo = new Todo(
 // Add todo to project
 defaultProject.addTodo(todo);
 
-console.log(defaultProject.todos);
+console.log(todo);
 
 // console.log(todo.priority);
 

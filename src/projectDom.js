@@ -1,28 +1,25 @@
 import Todo from "./todo";
 
-const todoDialog = document.getElementById("todo-dialog");
-const todoButton = document.getElementById("todo-btn");
+const projectDialog = document.getElementById("project-dialog");
+const projectButton = document.getElementById("project-btn");
 const closeDialogbutton = document.getElementById("close-dialog-btn");
-const todoForm = document.getElementById("todo-form");
+const projectForm = document.getElementById("project-form");
 
-todoButton.addEventListener("click", () => {
-  todoDialog.showModal();
+projectButton.addEventListener("click", () => {
+  projectDialog.showModal();
 });
 
 closeDialogbutton.addEventListener("click", () => {
-  todoDialog.close();
+  projectDialog.close();
 });
 
 // Handle form submit
-todoForm.addEventListener("submit", (event) => {
+projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
   // Get values from form
   const title = document.getElementById("title").value.trim();
   const description = document.getElementById("description").value.trim();
-  const dueDate = document.getElementById("dueDate").value;
-  const priority = document.getElementById("priority").value;
-  const notes = document.getElementById("notes").value.trim();
 
   // Create new Todo
   const newTodo = new Todo(title, description, dueDate, priority, notes);
@@ -30,6 +27,6 @@ todoForm.addEventListener("submit", (event) => {
   console.log("✅ New Todo created:", newTodo); // debug
 
   // Close and reset form
-  todoDialog.close();
-  todoForm.reset();
+  projectDialog.close();
+  projectForm.reset();
 });
