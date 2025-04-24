@@ -14,4 +14,4 @@ class Project {
     return this._todos;
   }
 }
-export default Project;
+export { Project };

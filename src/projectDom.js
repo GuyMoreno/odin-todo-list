@@ -1,15 +1,16 @@
 import Todo from "./todo";
+import { getElementById } from "./utils";
 
-const projectDialog = document.getElementById("project-dialog");
-const projectButton = document.getElementById("project-btn");
-const closeDialogbutton = document.getElementById("close-dialog-btn");
-const projectForm = document.getElementById("project-form");
+const projectDialog = getElementById("project-dialog");
+const projectButton = getElementById("project-btn");
+const closeProjectDialogbutton = getElementById("close-project-dialog-btn");
+const projectForm = getElementById("project-form");
 
 projectButton.addEventListener("click", () => {
   projectDialog.showModal();
 });
 
-closeDialogbutton.addEventListener("click", () => {
+closeProjectDialogbutton.addEventListener("click", () => {
   projectDialog.close();
 });
 

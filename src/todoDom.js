@@ -1,28 +1,32 @@
 import Todo from "./todo";
 
-const todoDialog = document.getElementById("todo-dialog");
-const todoButton = document.getElementById("todo-btn");
-const closeDialogbutton = document.getElementById("close-dialog-btn");
-const todoForm = document.getElementById("todo-form");
+import { getElementById } from "./utils";
+import { createTodoCard } from "./todoCardDom";
+
+const todoDialog = getElementById("todo-dialog");
+const todoButton = getElementById("todo-btn");
+const closeTodoDialogbutton = getElementById("close-todo-dialog-btn");
+const todoForm = getElementById("todo-form");
 
 todoButton.addEventListener("click", () => {
   todoDialog.showModal();
 });
 
-closeDialogbutton.addEventListener("click", () => {
+closeTodoDialogbutton.addEventListener("click", () => {
   todoDialog.close();
 });
 
 // Handle form submit
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
-
+  displayTodos();
   // Get values from form
-  const title = document.getElementById("title").value.trim();
-  const description = document.getElementById("description").value.trim();
-  const dueDate = document.getElementById("dueDate").value;
-  const priority = document.getElementById("priority").value;
-  const notes = document.getElementById("notes").value.trim();
+  const title = getElementById("todo-title").value.trim();
+  const description = getElementById("todo-description").value.trim();
+
+  const dueDate = getElementById("dueDate").value;
+  const priority = getElementById("priority").value;
+  const notes = getElementById("notes").value.trim();
 
   // Create new Todo
   const newTodo = new Todo(title, description, dueDate, priority, notes);
@@ -33,3 +37,21 @@ todoForm.addEventListener("submit", (event) => {
   todoDialog.close();
   todoForm.reset();
 });
+
+export function displayTodos(todos) {
+  if (!todos || todos.length === 0) {
+    console.log("No todos to display.");
+    return;
+  }
+
+  const todosContainer = getElementById("todos-container");
+
+  // Clear the container before displaying new todos
+  todosContainer.innerHTML = "";
+
+  // Create and append todo cards
+  todos.forEach((todo) => {
+    const todoCard = createTodoCard(todo);
+    todosContainer.appendChild(todoCard);
+  });
+}

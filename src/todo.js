@@ -8,9 +8,7 @@ class Todo {
     priority = Priority.MEDIUM,
     notes = ""
   ) {
-    if (!Priority.isValid(priority)) {
-      throw new Error("Invalid priority level");
-    }
+    this._validatePriority(priority);
     this._title = title;
     this._description = description;
     this._dueDate = dueDate;
@@ -19,6 +17,19 @@ class Todo {
     this._isCompleted = false;
   }
 
+  // Private validator
+  _validatePriority(priority) {
+    if (!Priority.isValid(priority)) {
+      throw new Error("Invalid priority level");
+    }
+  }
+
+  // Priority setter with validation
+  set priority(newPriority) {
+    this._validatePriority(newPriority);
+    this._priority = newPriority;
+  }
+  
   toggleComplete() {
     this._isCompleted = !this._isCompleted;
   }
