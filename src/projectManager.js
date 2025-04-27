@@ -2,7 +2,7 @@ import { Project } from "./project";
 
 class ProjectManager {
   constructor() {
-    this._projects = []; // Array to store all projects
+    this._projects = []; // Array to store ALL PROJECTS
     this.currentProject = null;
     this.addProject(new Project("Inbox")); // Default project
   }
@@ -14,6 +14,10 @@ class ProjectManager {
     if (!this.currentProject) {
       this.currentProject = project;
     }
+  }
+
+  getProjectByName(name) {
+    return this._projects.find((p) => p.name === name);
   }
 
   setCurrentProject(projectName) {

@@ -22,11 +22,6 @@ projectForm.addEventListener("submit", (event) => {
   const title = document.getElementById("title").value.trim();
   const description = document.getElementById("description").value.trim();
 
-  // Create new Todo
-  const newTodo = new Todo(title, description, dueDate, priority, notes);
-
-  console.log("✅ New Todo created:", newTodo); // debug
-
   // Close and reset form
   projectDialog.close();
   projectForm.reset();

@@ -1,18 +1,22 @@
 import "./styles.css";
 import Todo from "./todo";
-import { Project } from "./project";
 import ProjectManager from "./projectManager";
 import { displayTodos } from "./todoDom";
 
-import ProjectDom from "./projectDom";
-
 const projectManager = new ProjectManager();
 
-const defaultProject = projectManager.getProjectByName("Inbox");
+const TasksProject = projectManager.addProject("TasksProject");
+
+projectManager.setCurrentProject("DefaultProject");
+
+const defaultProject = projectManager.getCurrentProject();
+
+// Create a new project
+//
 
 const todo = new Todo(
-  "Example",
-  "This is an example todo",
+  "Start using the Tasks App",
+  "ALOT",
   "2025-04-23",
   "high"
 );
@@ -20,8 +24,8 @@ const todo = new Todo(
 // Add todo to project
 defaultProject.addTodo(todo);
 
+const todo2 = new Todo("Drink Water", "ALOT", "2025-04-23", "low");
+defaultProject.addTodo(todo2);
+
 console.log(todo);
 displayTodos(defaultProject.todos);
-// console.log(todo.priority);
-
-// const dialog = createTodoDialog();
