@@ -1,81 +1,71 @@
 import Todo from "./todo";
-import ProjectManager from "./projectManager";
-
+import { currentProject } from "./index";
 import { getElementById, createTextElement } from "./utils";
 
-// Get elements from the DOM
+// Get DOM elements
 const todoDialog = getElementById("todo-dialog");
 const todoButton = getElementById("todo-btn");
-const closeTodoDialogbutton = getElementById("close-todo-dialog-btn");
+const closeTodoDialogButton = getElementById("close-todo-dialog-btn");
 const todoForm = getElementById("todo-form");
 
-// Function to create a dialog for adding a new todo
-export function createTodoCard(todo) {
-  const todoCard = document.createElement("div");
-  todoCard.classList.add("todo-card");
-
-  todoCard.appendChild(createTextElement("h3", todo.title));
-
-  todoCard.appendChild(
-    createTextElement("p", todo.description || "No description available")
-  );
-
-  todoCard.appendChild(createTextElement("p", `Due: ${todo.dueDate}`));
-
-  todoCard.appendChild(createTextElement("p", `Priority: ${todo.priority}`));
-
-  todoCard.appendChild(
-    createTextElement("p", `Notes: ${todo.notes || "No notes"}`)
-  );
-
-  return todoCard;
-}
-
+// Opens the form dialog and displays existing todos
 todoButton.addEventListener("click", () => {
   todoDialog.showModal();
-  displayTodos(currentProject.todos);
+  displayTodos(); // always use currentProject.todos internally
 });
 
-closeTodoDialogbutton.addEventListener("click", () => {
+closeTodoDialogButton.addEventListener("click", () => {
   todoDialog.close();
 });
 
-// Handle form submit
+// Form submission
 todoForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  displayTodos();
 
-  // Get values from form
   const title = getElementById("todo-title").value.trim();
   const description = getElementById("todo-description").value.trim();
   const dueDate = getElementById("dueDate").value;
   const priority = getElementById("priority").value;
   const notes = getElementById("notes").value.trim();
 
-  // Create new Todo from form values
   const newTodo = new Todo(title, description, dueDate, priority, notes);
-  console.log("✅ New Todo created:", newTodo); // debug
+  currentProject.addTodo(newTodo);
 
-  // Close and reset form
   todoDialog.close();
   todoForm.reset();
-  displayTodos(newTodo);
+  displayTodos();
 });
 
-export function displayTodos(todos) {
-  if (!todos || todos.length === 0) {
-    console.log("No todos to display.");
+// Display all todos in the current project
+export function displayTodos() {
+  const todos = currentProject.todos;
+  const container = getElementById("todos-container");
+  container.innerHTML = "";
+
+  if (todos.length === 0) {
+    container.textContent = "No todos yet.";
     return;
   }
 
-  const todosContainer = getElementById("todos-container");
-
-  // Clear the container before displaying new todos
-  // todosContainer.innerHTML = "";
-
-  // Create and append todo cards
   todos.forEach((todo) => {
-    const todoCard = createTodoCard(todo);
-    todosContainer.appendChild(todoCard);
+    const card = createTodoCard(todo);
+    container.appendChild(card);
   });
+}
+
+function createTodoCard(todo) {
+  const card = document.createElement("div");
+  card.classList.add("todo-card");
+
+  card.appendChild(createTextElement("h3", todo.title));
+  card.appendChild(
+    createTextElement("p", todo.description || "No description")
+  );
+  card.appendChild(createTextElement("p", `Due: ${todo.dueDate}`));
+  card.appendChild(createTextElement("p", `Priority: ${todo.priority}`));
+  card.appendChild(
+    createTextElement("p", `Notes: ${todo.notes || "No notes"}`)
+  );
+
+  return card;
 }

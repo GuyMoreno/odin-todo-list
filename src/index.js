@@ -3,29 +3,19 @@ import Todo from "./todo";
 import ProjectManager from "./projectManager";
 import { displayTodos } from "./todoDom";
 
+// Create project manager and default project
 const projectManager = new ProjectManager();
+const inboxProject = projectManager.getProjectByName("Inbox");
 
-const TasksProject = projectManager.addProject("TasksProject");
+// Make sure currentProject is exportable
+export const currentProject = inboxProject;
 
-projectManager.setCurrentProject("DefaultProject");
-
-const defaultProject = projectManager.getCurrentProject();
-
-// Create a new project
-//
-
-const todo = new Todo(
-  "Start using the Tasks App",
-  "ALOT",
+const todo1 = new Todo(
+  "Learn JavaScript",
+  "Study for 2 hours",
   "2025-04-23",
   "high"
 );
-
-// Add todo to project
-defaultProject.addTodo(todo);
-
-const todo2 = new Todo("Drink Water", "ALOT", "2025-04-23", "low");
-defaultProject.addTodo(todo2);
-
-console.log(todo);
-displayTodos(defaultProject.todos);
+inboxProject.addTodo(todo1);
+console.log(todo1.description); // Should log the todo1 object
+displayTodos();
