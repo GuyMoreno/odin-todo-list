@@ -1,5 +1,5 @@
-import Todo from "./todo";
 import { getElementById } from "./utils";
+import { addNewProject } from "./projectService";
 
 const projectDialog = getElementById("project-dialog");
 const projectButton = getElementById("project-btn");
@@ -14,15 +14,15 @@ closeProjectDialogbutton.addEventListener("click", () => {
   projectDialog.close();
 });
 
-// Handle form submit
 projectForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  // Get values from form
-  const title = document.getElementById("title").value.trim();
-  const description = document.getElementById("description").value.trim();
+  const title = document.getElementById("project-title").value.trim();
 
-  // Close and reset form
+  const newProject = addNewProject(title); // ✅ Now the project is created
+
+  console.log("✅ New project created:", newProject); // Debug line
+
   projectDialog.close();
   projectForm.reset();
 });

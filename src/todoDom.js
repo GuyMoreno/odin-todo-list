@@ -1,6 +1,7 @@
 import Todo from "./todo";
 import { currentProject } from "./index";
 import { getElementById, createTextElement } from "./utils";
+import { getTodoData } from "./todoService";
 
 // Get DOM elements
 const todoDialog = getElementById("todo-dialog");
@@ -38,7 +39,7 @@ todoForm.addEventListener("submit", (event) => {
 
 // Display all todos in the current project
 export function displayTodos() {
-  const todos = currentProject.todos;
+  const todos = getTodoData();
   const container = getElementById("todos-container");
   container.innerHTML = "";
 
