@@ -1,4 +1,4 @@
-class Project {
+export default class Project {
   constructor(name) {
     this.name = name; // Name of the project (e.g., "Work", "Home")
     this._todos = []; // Array to hold todos associated with the project
@@ -28,4 +28,3 @@ class Project {
     return null; // Return null if no todo with that title is found
   }
 }
-export { Project };

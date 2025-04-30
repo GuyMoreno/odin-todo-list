@@ -1,28 +1,58 @@
-import { getElementById } from "./utils";
+// projectModal.js
+
+import { getElementById, createTextElement } from "./utils";
 import { addNewProject } from "./projectService";
+import ProjectManager from "./projectManager";
+import { getProjectData } from "./projectService";
 
-const projectDialog = getElementById("project-dialog");
-const projectButton = getElementById("project-btn");
-const closeProjectDialogbutton = getElementById("close-project-dialog-btn");
-const projectForm = getElementById("project-form");
+export function setupProjectModal() {
+  const projectDialog = getElementById("project-dialog");
+  const projectButton = getElementById("project-btn");
+  const closeButton = getElementById("close-project-dialog-btn");
+  const projectForm = getElementById("project-form");
 
-projectButton.addEventListener("click", () => {
-  projectDialog.showModal();
-});
+  projectButton.addEventListener("click", () => {
+    projectDialog.showModal();
+  });
 
-closeProjectDialogbutton.addEventListener("click", () => {
-  projectDialog.close();
-});
+  closeButton.addEventListener("click", () => {
+    projectDialog.close();
+  });
 
-projectForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+  projectForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const title = getElementById("project-title").value.trim();
+    if (!title) return alert("Title required!");
 
-  const title = document.getElementById("project-title").value.trim();
+    const newProject = addNewProject(title);
+    displayProjects();
+    console.log("✅ Project created:", newProject);
 
-  const newProject = addNewProject(title); // ✅ Now the project is created
+    projectDialog.close();
+    projectForm.reset();
+  });
+}
 
-  console.log("✅ New project created:", newProject); // Debug line
+export function displayProjects() {
+  const projects = getProjectData();
+  const container = getElementById("projects-container");
+  container.innerHTML = "";
 
-  projectDialog.close();
-  projectForm.reset();
-});
+  if (projects.length === 0) {
+    container.textContent = "No projects yet.";
+    return;
+  }
+
+  projects.forEach((project) => {
+    const card = createProjectCard(project);
+    container.appendChild(card);
+  });
+}
+
+function createProjectCard(project) {
+  const card = document.createElement("div");
+  card.classList.add("project-card");
+  card.appendChild(createTextElement("h3", project.name));
+
+  return card;
+}

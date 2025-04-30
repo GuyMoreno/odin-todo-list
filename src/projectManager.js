@@ -1,4 +1,4 @@
-import { Project } from "./project";
+import Project from "./project";
 
 class ProjectManager {
   constructor() {
@@ -12,7 +12,7 @@ class ProjectManager {
 
   // Getter for all projects
   get projects() {
-    return [...this._projects]; // Return a copy to prevent external mutation
+    return [...this._projects]; 
   }
 
   getProjectByName(name) {

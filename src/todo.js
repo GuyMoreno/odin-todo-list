@@ -5,7 +5,7 @@ class Todo {
     title,
     description,
     dueDate,
-    priority = Priority.MEDIUM,
+    priority = Priority.MEDIUM, //// Default to 'medium' priority if not specified
     notes = ""
   ) {
     this._validatePriority(priority);

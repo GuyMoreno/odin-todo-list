@@ -9,4 +9,3 @@ export function createTextElement(tag, textContent) {
   element.textContent = textContent;
   return element;
 }
-
