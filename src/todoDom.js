@@ -69,15 +69,41 @@ function createTodoCard(todo) {
   const card = document.createElement("div");
   card.classList.add("todo-card");
 
-  card.appendChild(createTextElement("h3", todo.title));
-  card.appendChild(
+  const header = document.createElement("div");
+  header.classList.add("todo-header");
+
+  const title = document.createElement("h3");
+  title.textContent = todo.title;
+
+  const toggleIcon = document.createElement("span");
+  toggleIcon.classList.add("toggle-icon");
+  toggleIcon.textContent = "▶"; // חץ סגור בהתחלה
+
+  // תוכן שמתרחב
+  const content = document.createElement("div");
+  content.classList.add("todo-content");
+  content.style.display = "none";
+
+  content.appendChild(
     createTextElement("p", todo.description || "No description")
   );
-  card.appendChild(createTextElement("p", `Due: ${todo.dueDate}`));
-  card.appendChild(createTextElement("p", `Priority: ${todo.priority}`));
-  card.appendChild(
+  content.appendChild(createTextElement("p", `Due: ${todo.dueDate}`));
+  content.appendChild(createTextElement("p", `Priority: ${todo.priority}`));
+  content.appendChild(
     createTextElement("p", `Notes: ${todo.notes || "No notes"}`)
   );
+
+  // לחיצה על האייקון תפתח/תסגור את התוכן
+  toggleIcon.addEventListener("click", () => {
+    const isOpen = content.style.display === "block";
+    content.style.display = isOpen ? "none" : "block";
+    toggleIcon.textContent = isOpen ? "▶" : "▼";
+  });
+
+  header.appendChild(title);
+  header.appendChild(toggleIcon);
+  card.appendChild(header);
+  card.appendChild(content);
 
   return card;
 }

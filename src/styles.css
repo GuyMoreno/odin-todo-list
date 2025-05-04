@@ -94,38 +94,50 @@ button:hover {
 }
 
 .todo-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  width: 200px;
-  height: 200px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  border-radius: 6px;
+  margin: 0.5rem 0;
+  padding: 0.8rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+}
+
+.todo-header {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 0.5rem;
-  text-align: left;
-  transition: box-shadow 0.2s ease;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
 
-.todo-card:hover {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-}
-
-.todo-card h3 {
-  margin: 0;
-  font-weight: 600;
-}
-
-.todo-card p {
-  margin: 0;
-  font-size: 0.85rem;
+.toggle-icon {
+  font-size: 1rem;
   color: #666;
-  line-height: 1.3;
+  user-select: none;
 }
 
+.todo-title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.todo-content {
+  margin-top: 0.6rem;
+  padding-right: 1.5rem;
+  font-size: 0.9rem;
+  color: #444;
+}
 #todo-btn {
   margin-bottom: 1rem;
+}
+
+label {
+  display: flex-inline;
+  align-items: center;
+  position: relative;
+}
+
+::placeholder {
+  color: #999;
+  font-size: 0.85rem;
+  opacity: 0.4;
 }

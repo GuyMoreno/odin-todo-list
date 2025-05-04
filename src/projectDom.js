@@ -11,13 +11,13 @@ export function setupProjectModal() {
   const closeButton = getElementById("close-project-dialog-btn");
   const projectForm = getElementById("project-form");
 
-  projectButton.addEventListener("click", () => {
-    projectDialog.showModal();
-  });
+  // projectButton.addEventListener("click", () => {
+  //   projectDialog.showModal();
+  // });
 
-  closeButton.addEventListener("click", () => {
-    projectDialog.close();
-  });
+  // closeButton.addEventListener("click", () => {
+  //   projectDialog.close();
+  // });
 
   projectForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -26,33 +26,34 @@ export function setupProjectModal() {
 
     const newProject = addNewProject(title);
     displayProjects();
+    getElementById("project-title").value = ""; // Clear the input field
     console.log("✅ Project created:", newProject);
 
-    projectDialog.close();
-    projectForm.reset();
+    // projectDialog.close();
+    // projectForm.reset();
   });
 }
 
 export function displayProjects() {
   const projects = getProjectData();
-  const container = getElementById("projects-container");
-  container.innerHTML = "";
+  const projectsContainer = getElementById("projects-container");
+  projectsContainer.innerHTML = "";
 
   if (projects.length === 0) {
-    container.textContent = "No projects yet.";
+    projectsContainer.textContent = "No projects yet.";
     return;
   }
 
   projects.forEach((project) => {
-    const card = createProjectCard(project);
-    container.appendChild(card);
+    const projectLi = createProjectLi(project);
+    projectsContainer.appendChild(projectLi);
   });
 }
 
-function createProjectCard(project) {
-  const card = document.createElement("div");
-  card.classList.add("project-card");
-  card.appendChild(createTextElement("h3", project.name));
+function createProjectLi(project) {
+  const projectLi = document.createElement("li");
+  projectLi.classList.add("project-li");
+  projectLi.appendChild(createTextElement("li", project.name));
 
-  return card;
+  return projectLi;
 }

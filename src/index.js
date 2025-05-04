@@ -12,22 +12,23 @@ const inboxProject = projectManager.getProjectByName("Inbox");
 
 export { projectManager };
 
-const todo1 = new Todo(
-  "Learn JavaScript",
-  "Study for 2 hours",
-  "2025-04-23",
-  "high"
-);
-inboxProject.addTodo(todo1);
+// const todo1 = new Todo(
+//   "Learn JavaScript",
+//   "Study for 2 hours",
+//   "2025-04-23",
+//   "high"
+// );
+// inboxProject.addTodo(todo1);
 // console.log(todo1.description); // Should log the todo1 object
 
-const todo2 = new Todo(
-  "Learn Python",
-  "Study for 4 hours",
-  "2025-04-23",
-  "high"
-);
-inboxProject.addTodo(todo2);
+// const todo2 = new Todo(
+//   "Learn Python",
+//   "Study for 4 hours",
+//   "2025-04-23",
+//   "high"
+// );
+
+// inboxProject.addTodo(todo2);
 // console.log(todo2.description); // Should log the todo2 object
 
 console.log("Project Manager:", projectManager);
