@@ -2,8 +2,12 @@
 
 import { getElementById, createTextElement } from "./utils";
 import { addNewProject } from "./projectService";
-import ProjectManager from "./projectManager";
+
+import projectManager from "./projectManager";
+
 import { getProjectData } from "./projectService";
+
+import { displayTodos } from "./todoDom";
 
 export function setupProjectModal() {
   const projectDialog = getElementById("project-dialog");
@@ -53,7 +57,30 @@ export function displayProjects() {
 function createProjectLi(project) {
   const projectLi = document.createElement("li");
   projectLi.classList.add("project-li");
-  projectLi.appendChild(createTextElement("li", project.name));
+
+  const projectName = createTextElement("span", project.name);
+  projectLi.appendChild(projectName);
+
+  // 🗑️ Add delete button
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-project-btn", "hidden-delete");
+  projectLi.appendChild(deleteBtn);
+
+  // 📌 Highlight project on click
+  projectName.addEventListener("click", () => {
+    document
+      .querySelectorAll(".project-li")
+      .forEach((el) => el.classList.remove("active"));
+    projectLi.classList.add("active");
+    displayTodos(project.name);
+  });
+
+  // 🧹 Delete on click
+  deleteBtn.addEventListener("click", () => {
+    projectManager.removeProject(project.name); // משתמש ב-ProjectManager
+    displayProjects(); // מרענן את הרשימה
+  });
 
   return projectLi;
 }

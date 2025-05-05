@@ -49,7 +49,7 @@ todoForm.addEventListener("submit", (event) => {
 // Display all todos in the selected project
 export function displayTodos(projectName) {
   const todos = getTodoData(projectName);
-  const container = getElementById("todos-container");
+  const container = getElementById("todos-sub-container");
 
   container.innerHTML = "";
 
@@ -58,7 +58,6 @@ export function displayTodos(projectName) {
     return;
   }
 
-  // לא מנקים את ה-container, רק מוסיפים את המשימות החדשות
   todos.forEach((todo) => {
     const card = createTodoCard(todo);
     container.appendChild(card);

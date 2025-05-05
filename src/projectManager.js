@@ -12,7 +12,10 @@ class ProjectManager {
 
   // Getter for all projects
   get projects() {
-    return [...this._projects]; 
+    return [...this._projects];
+  }
+  removeProject(projectName) {
+    this._projects = this._projects.filter((p) => p.name !== projectName);
   }
 
   getProjectByName(name) {
@@ -21,7 +24,8 @@ class ProjectManager {
         return project; // Return the project if the name matches
       }
     }
-    return null; // מחזיר null אם לא נמצא
+    return null; 
   }
 }
-export default ProjectManager;
+const projectManager = new ProjectManager();
+export default projectManager;

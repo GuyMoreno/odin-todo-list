@@ -9,17 +9,14 @@
     <h1>Get Tasks Done</h1>
 
     <!-- Sidebar for Project Lists -->
-    <div class="all-tasks">
-      <h2 class="task-list-title">My Projects</h2>
+    <div class="project">
+      <h2 class="projects-title">My Projects</h2>
       <ul class="task-list" id="projects-container">
         <!-- Dynamic Project List will be inserted here -->
       </ul>
 
-      <!-- <button id="project-btn" class="button">+ New Project</button> -->
-      <!-- <div id="projects-container"></div> -->
-      <!-- <dialog id="project-dialog"> -->
       <form id="project-form" method="dialog">
-        <h2>New Project</h2>
+        <h3>New Project</h3>
         <label for="title"> </label>
         <input
           type="text"
@@ -30,13 +27,11 @@
         /><br /><br />
 
         <button type="submit" id="submit-project-btn">Add Project</button>
-        <!-- <button type="button" id="close-project-dialog-btn">Cancel</button> -->
       </form>
       <!-- </dialog> -->
     </div>
-    <!-- Dont touch below -->
-    <div class="main-content">
-      <h1>Todos</h1>
+    <div class="todos-main-container">
+      <h2>Todos</h2>
       <button id="todo-btn" class="button">+ New Todo</button>
       <dialog id="todo-dialog">
         <form id="todo-form" method="dialog">
@@ -74,7 +69,7 @@
           <button type="button" id="close-todo-dialog-btn">Cancel</button>
         </form>
       </dialog>
-      <div id="todos-container"></div>
+      <div id="todos-sub-container">test</div>
     </div>
     <!-- <div class="footer">
         Lorem ipsum dolor sit amet consectetur adipisicing.
