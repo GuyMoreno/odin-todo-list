@@ -9,12 +9,14 @@ class Todo {
     notes = ""
   ) {
     this._validatePriority(priority);
+    this.id = Date.now();
     this._title = title;
     this._description = description;
     this._dueDate = dueDate;
     this._priority = priority;
     this._notes = notes;
     this._isCompleted = false;
+
   }
 
   // Private validator
@@ -29,7 +31,19 @@ class Todo {
     this._validatePriority(newPriority);
     this._priority = newPriority;
   }
-  
+  set title(newTitle) {
+    this._title = newTitle;
+  }
+  set description(newDesc) {
+    this._description = newDesc;
+  }
+  set dueDate(newDate) {
+    this._dueDate = newDate;
+  }
+  set notes(newNotes) {
+    this._notes = newNotes;
+  }
+
   toggleComplete() {
     this._isCompleted = !this._isCompleted;
   }

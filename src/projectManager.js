@@ -6,7 +6,12 @@ class ProjectManager {
     this.addProject(new Project("Inbox")); // Default project
   }
   // Add a new project
+  // Add a new project with name uniqueness check
   addProject(project) {
+    if (this._projects.some((p) => p.name === project.name)) {
+      alert("Project with this name already exists");
+      throw new Error("Project with this name already exists");
+    }
     this._projects.push(project);
   }
 
@@ -24,7 +29,7 @@ class ProjectManager {
         return project; // Return the project if the name matches
       }
     }
-    return null; 
+    return null;
   }
 }
 const projectManager = new ProjectManager();

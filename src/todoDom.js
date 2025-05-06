@@ -2,6 +2,7 @@ import Todo from "./todo";
 import { getElementById, createTextElement } from "./utils";
 import { getTodoData } from "./todoService";
 import { projectManager } from "./index";
+import { ca } from "date-fns/locale";
 
 // Get DOM elements
 const todoDialog = getElementById("todo-dialog");
@@ -78,7 +79,6 @@ function createTodoCard(todo) {
   toggleIcon.classList.add("toggle-icon");
   toggleIcon.textContent = "▶"; // חץ סגור בהתחלה
 
-  // תוכן שמתרחב
   const content = document.createElement("div");
   content.classList.add("todo-content");
   content.style.display = "none";
@@ -92,11 +92,23 @@ function createTodoCard(todo) {
     createTextElement("p", `Notes: ${todo.notes || "No notes"}`)
   );
 
-  // לחיצה על האייקון תפתח/תסגור את התוכן
-  toggleIcon.addEventListener("click", () => {
+  header.addEventListener("click", () => {
     const isOpen = content.style.display === "block";
     content.style.display = isOpen ? "none" : "block";
     toggleIcon.textContent = isOpen ? "▶" : "▼";
+  });
+
+  // 🗑️ Add delete button for Todo
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-todo-btn");
+  content.appendChild(deleteBtn);
+
+  // 🧹 Delete todo on click
+  deleteBtn.addEventListener("click", () => {
+    const projectName = getElementById("project-select").value;
+    deleteTodoFromProject(todo, projectName);
+    displayTodos(projectName); // ✔️ זה כבר מרענן את הרשימה
   });
 
   header.appendChild(title);
@@ -126,5 +138,15 @@ export function populateProjectSelect() {
     select.value = projects[projects.length - 1].name;
   } else {
     select.value = "Inbox";
+  }
+}
+
+function deleteTodoFromProject(todo, projectName) {
+  const targetProject = projectManager.getProjectByName(projectName);
+  if (targetProject) {
+    targetProject.removeTodo(todo);
+    console.log("🗑️ Todo deleted:", todo.title);
+    console.log("לפני:", targetProject.todos);
+    console.log("אחרי:", targetProject.todos);
   }
 }

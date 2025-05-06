@@ -11,7 +11,7 @@ export default class Project {
 
   // Remove the specified todo
   removeTodo(todoToRemove) {
-    this._todos = this._todos.filter((todo) => todo !== todoToRemove); // filter out the todo to remove and return the rest
+    this._todos = this._todos.filter((todo) => todo.id !== todoToRemove.id);
   }
 
   // Getter to access todos
