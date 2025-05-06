@@ -143,10 +143,17 @@ export function populateProjectSelect() {
 
 function deleteTodoFromProject(todo, projectName) {
   const targetProject = projectManager.getProjectByName(projectName);
-  if (targetProject) {
-    targetProject.removeTodo(todo);
-    console.log("🗑️ Todo deleted:", todo.title);
-    console.log("לפני:", targetProject.todos);
-    console.log("אחרי:", targetProject.todos);
+  if (targetProject && todo && todo.title) {
+    // Delete by title instead of ID (if titles are unique)
+    const todoTitle = todo.title;
+    console.log("Trying to delete todo with title:", todoTitle);
+
+    const beforeCount = targetProject._todos.length;
+    targetProject._todos = targetProject._todos.filter(
+      (t) => t.title !== todoTitle
+    );
+    const afterCount = targetProject._todos.length;
+
+    console.log(`Deleted ${beforeCount - afterCount} todos`);
   }
 }

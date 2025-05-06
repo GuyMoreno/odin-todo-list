@@ -68,7 +68,7 @@ function createProjectLi(project) {
   projectLi.appendChild(deleteBtn);
 
   // 📌 Highlight project on click
-  projectName.addEventListener("click", () => {
+  projectLi.addEventListener("click", () => {
     document
       .querySelectorAll(".project-li")
       .forEach((el) => el.classList.remove("active"));
