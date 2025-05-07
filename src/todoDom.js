@@ -2,67 +2,51 @@ import Todo from "./todo";
 import { getElementById, createTextElement } from "./utils";
 import { getTodoData } from "./todoService";
 import { projectManager } from "./index";
-import { ca } from "date-fns/locale";
 
-// Get DOM elements
 const todoDialog = getElementById("todo-dialog");
 const todoButton = getElementById("todo-btn");
 const closeTodoDialogButton = getElementById("close-todo-dialog-btn");
 const todoForm = getElementById("todo-form");
 
-// Opens the form dialog and displays existing todos
 todoButton.addEventListener("click", () => {
   todoDialog.showModal();
   populateProjectSelect();
-
-  const selectedProject = getElementById("project-select").value;
-  displayTodos(selectedProject);
+  displayTodos(getElementById("project-select").value);
 });
 
-closeTodoDialogButton.addEventListener("click", () => {
-  todoDialog.close();
-});
+closeTodoDialogButton.addEventListener("click", () => todoDialog.close());
 
-// Form submission
-todoForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+todoForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  const title = getElementById("todo-title").value.trim();
-  const description = getElementById("todo-description").value.trim();
-  const dueDate = getElementById("dueDate").value;
-  const priority = getElementById("priority").value;
-  const notes = getElementById("notes").value.trim();
-  const projectName = getElementById("project-select").value;
+  const newTodo = new Todo(
+    getElementById("todo-title").value.trim(),
+    getElementById("todo-description").value.trim(),
+    getElementById("dueDate").value,
+    getElementById("priority").value,
+    getElementById("notes").value.trim()
+  );
 
-  const newTodo = new Todo(title, description, dueDate, priority, notes);
-
+  const projectName =
+    document.querySelector(".project-li.active span")?.textContent || "Inbox";
   const targetProject = projectManager.getProjectByName(projectName);
-  if (!targetProject) return alert("Project not found!");
 
-  targetProject.addTodo(newTodo);
-  console.log("📝 Todo added to:", projectName, newTodo);
-
-  todoDialog.close();
-  todoForm.reset();
-  displayTodos(projectName); // Pass the projectName directly here
+  if (targetProject) {
+    targetProject.addTodo(newTodo);
+    todoDialog.close();
+    todoForm.reset();
+    displayTodos(projectName);
+  } else {
+    alert("Project not found!");
+  }
 });
 
-// Display all todos in the selected project
 export function displayTodos(projectName) {
   const todos = getTodoData(projectName);
   const container = getElementById("todos-sub-container");
-
-  container.innerHTML = "";
-
-  if (todos.length === 0) {
-    container.textContent = "No todos yet.";
-    return;
-  }
-
-  todos.forEach((todo) => {
-    const card = createTodoCard(todo);
-    container.appendChild(card);
-  });
+  container.innerHTML = todos.length
+    ? todos.map(createTodoCard).join("")
+    : "No todos yet.";
 }
 
 function createTodoCard(todo) {
@@ -77,19 +61,15 @@ function createTodoCard(todo) {
 
   const toggleIcon = document.createElement("span");
   toggleIcon.classList.add("toggle-icon");
-  toggleIcon.textContent = "▶"; // חץ סגור בהתחלה
+  toggleIcon.textContent = "▶";
 
   const content = document.createElement("div");
   content.classList.add("todo-content");
   content.style.display = "none";
-
-  content.appendChild(
-    createTextElement("p", todo.description || "No description")
-  );
-  content.appendChild(createTextElement("p", `Due: ${todo.dueDate}`));
-  content.appendChild(createTextElement("p", `Priority: ${todo.priority}`));
-  content.appendChild(
-    createTextElement("p", `Notes: ${todo.notes || "No notes"}`)
+  content.append(
+    ...["description", "dueDate", "priority", "notes"].map((key) =>
+      createTextElement("p", todo[key] || `No ${key}`)
+    )
   );
 
   header.addEventListener("click", () => {
@@ -98,62 +78,47 @@ function createTodoCard(todo) {
     toggleIcon.textContent = isOpen ? "▶" : "▼";
   });
 
-  // 🗑️ Add delete button for Todo
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
   deleteBtn.classList.add("delete-todo-btn");
-  content.appendChild(deleteBtn);
-
-  // 🧹 Delete todo on click
   deleteBtn.addEventListener("click", () => {
-    const projectName = getElementById("project-select").value;
-    deleteTodoFromProject(todo, projectName);
-    displayTodos(projectName); // ✔️ זה כבר מרענן את הרשימה
+    deleteTodoFromProject(todo, getElementById("project-select").value);
+    displayTodos(getElementById("project-select").value);
   });
 
-  header.appendChild(title);
-  header.appendChild(toggleIcon);
-  card.appendChild(header);
-  card.appendChild(content);
-
+  content.append(deleteBtn);
+  header.append(title, toggleIcon);
+  card.append(header, content);
   return card;
 }
 
-// Populates the project selection dropdown
 export function populateProjectSelect() {
   const select = getElementById("project-select");
-  select.innerHTML = ""; // Clear old options
+  const currentSelection = select.value;
 
-  const projects = projectManager.projects;
+  select.innerHTML = projectManager.projects
+    .map(
+      (project) => `<option value="${project.name}">${project.name}</option>`
+    )
+    .join("");
 
-  projects.forEach((project) => {
-    const option = document.createElement("option");
-    option.value = project.name;
-    option.textContent = project.name;
-    select.appendChild(option);
-  });
-
-  // Select the last project or "Inbox" if no projects
-  if (projects.length > 0) {
-    select.value = projects[projects.length - 1].name;
-  } else {
-    select.value = "Inbox";
-  }
+  select.value = projectManager.projects.some(
+    (p) => p.name === currentSelection
+  )
+    ? currentSelection
+    : projectManager.projects.length
+    ? projectManager.projects[projectManager.projects.length - 1].name
+    : "Inbox";
 }
 
 function deleteTodoFromProject(todo, projectName) {
   const targetProject = projectManager.getProjectByName(projectName);
-  if (targetProject && todo && todo.title) {
-    // Delete by title instead of ID (if titles are unique)
-    const todoTitle = todo.title;
-    console.log("Trying to delete todo with title:", todoTitle);
-
-    const beforeCount = targetProject._todos.length;
-    targetProject._todos = targetProject._todos.filter(
-      (t) => t.title !== todoTitle
+  if (targetProject) {
+    const todoToDelete = targetProject._todos.find(
+      (t) => t.title === todo.title
     );
-    const afterCount = targetProject._todos.length;
-
-    console.log(`Deleted ${beforeCount - afterCount} todos`);
+    if (todoToDelete) {
+      targetProject.removeTodo(todoToDelete);
+    }
   }
 }

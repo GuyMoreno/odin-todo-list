@@ -2,11 +2,8 @@
 
 import { getElementById, createTextElement } from "./utils";
 import { addNewProject } from "./projectService";
-
 import projectManager from "./projectManager";
-
 import { getProjectData } from "./projectService";
-
 import { displayTodos } from "./todoDom";
 
 export function setupProjectModal() {
@@ -14,14 +11,6 @@ export function setupProjectModal() {
   const projectButton = getElementById("project-btn");
   const closeButton = getElementById("close-project-dialog-btn");
   const projectForm = getElementById("project-form");
-
-  // projectButton.addEventListener("click", () => {
-  //   projectDialog.showModal();
-  // });
-
-  // closeButton.addEventListener("click", () => {
-  //   projectDialog.close();
-  // });
 
   projectForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -33,8 +22,9 @@ export function setupProjectModal() {
     getElementById("project-title").value = ""; // Clear the input field
     console.log("✅ Project created:", newProject);
 
-    // projectDialog.close();
-    // projectForm.reset();
+    // Close the dialog and reset the form
+    projectDialog.close();
+    projectForm.reset();
   });
 }
 
@@ -77,9 +67,10 @@ function createProjectLi(project) {
   });
 
   // 🧹 Delete on click
-  deleteBtn.addEventListener("click", () => {
-    projectManager.removeProject(project.name); // משתמש ב-ProjectManager
-    displayProjects(); // מרענן את הרשימה
+  deleteBtn.addEventListener("click", (event) => {
+    event.stopPropagation(); // Prevent triggering the li click
+    projectManager.removeProject(project.name); // Uses ProjectManager
+    displayProjects(); // Refreshes the project list
   });
 
   return projectLi;

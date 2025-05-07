@@ -1,6 +1,6 @@
 import "./styles.css";
 import Todo from "./todo";
-import projectManager from "./projectManager"; // 👈 עם אות קטנה כי זו לא מחלקה אלא מופע
+import projectManager from "./projectManager"; 
 import { displayTodos } from "./todoDom";
 import { displayProjects, setupProjectModal } from "./projectDom";
 
